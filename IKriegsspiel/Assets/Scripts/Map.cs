@@ -41,7 +41,11 @@ public class Map : MonoBehaviour
         if (texture != null)
         {
             var rend = GetComponent<MeshRenderer>();
-            var mat = new Material(Shader.Find("Standard"));
+            // use a shader that works with the Universal Render Pipeline
+            var shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null)
+                shader = Shader.Find("Unlit/Texture");
+            var mat = new Material(shader);
             mat.mainTexture = texture;
             rend.material = mat;
         }
