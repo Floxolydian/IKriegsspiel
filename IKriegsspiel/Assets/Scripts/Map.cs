@@ -14,7 +14,7 @@ public class Map : MonoBehaviour
         var coll = GetComponent<Collider>();
         if (coll != null)
         {
-            var pm = new PhysicMaterial();
+            var pm = new PhysicsMaterial();
             pm.dynamicFriction = dynamicFriction;
             pm.staticFriction = staticFriction;
             pm.bounciness = 0f;

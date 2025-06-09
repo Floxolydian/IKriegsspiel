@@ -8,12 +8,14 @@ public class DragAndDrop : MonoBehaviour
     Camera cam;
     Rigidbody grabbed;
     Collider grabbedCol;
-    PhysicMaterial noBounce;
+    float grabDistance;
+
+    PhysicsMaterial noBounce;
 
     void Start()
     {
         cam = Camera.main;
-        noBounce = new PhysicMaterial();
+        noBounce = new PhysicsMaterial();
         noBounce.bounciness = 0f;
     }
 
@@ -36,17 +38,22 @@ public class DragAndDrop : MonoBehaviour
     void BeginDrag()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        RaycastHit[] hits = Physics.RaycastAll(ray);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+        foreach (var hit in hits)
         {
             var rb = hit.rigidbody;
             if (rb != null && rb.GetComponent<Map>() == null)
             {
                 grabbed = rb;
                 grabbedCol = hit.collider;
+                grabDistance = hit.distance;
+
                 grabbed.isKinematic = true;
                 grabbed.useGravity = false;
-                grabbed.velocity = Vector3.zero;
+                grabbed.linearVelocity = Vector3.zero;
                 grabbed.angularVelocity = Vector3.zero;
+                break;
             }
         }
     }
@@ -54,8 +61,8 @@ public class DragAndDrop : MonoBehaviour
     void UpdateDrag()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        float dist = Vector3.Distance(cam.transform.position, grabbed.transform.position);
-        Vector3 pos = ray.GetPoint(dist);
+        Vector3 pos = ray.GetPoint(grabDistance);
+
         pos.y = Mathf.Max(pos.y, liftHeight);
         grabbed.transform.position = pos;
 
