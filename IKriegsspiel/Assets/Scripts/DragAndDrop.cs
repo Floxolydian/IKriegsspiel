@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DragAndDrop : MonoBehaviour
 {
@@ -23,12 +24,12 @@ public class DragAndDrop : MonoBehaviour
     {
         if (grabbed == null)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Mouse.current.leftButton.wasPressedThisFrame)
                 BeginDrag();
         }
         else
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
                 EndDrag();
             else
                 UpdateDrag();
@@ -37,7 +38,7 @@ public class DragAndDrop : MonoBehaviour
 
     void BeginDrag()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         RaycastHit[] hits = Physics.RaycastAll(ray);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         foreach (var hit in hits)
@@ -60,13 +61,13 @@ public class DragAndDrop : MonoBehaviour
 
     void UpdateDrag()
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
         Vector3 pos = ray.GetPoint(grabDistance);
 
         pos.y = Mathf.Max(pos.y, liftHeight);
         grabbed.transform.position = pos;
 
-        float scroll = Input.mouseScrollDelta.y;
+        float scroll = Mouse.current.scroll.ReadValue().y;
         if (Mathf.Abs(scroll) > Mathf.Epsilon)
             grabbed.transform.Rotate(Vector3.up, scroll * rotateSpeed, Space.World);
     }
