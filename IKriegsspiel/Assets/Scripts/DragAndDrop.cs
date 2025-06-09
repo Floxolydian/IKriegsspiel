@@ -10,12 +10,12 @@ public class DragAndDrop : MonoBehaviour
     Collider grabbedCol;
     float grabDistance;
 
-    PhysicMaterial noBounce;
+    PhysicsMaterial noBounce;
 
     void Start()
     {
         cam = Camera.main;
-        noBounce = new PhysicMaterial();
+        noBounce = new PhysicsMaterial();
         noBounce.bounciness = 0f;
     }
 
@@ -51,7 +51,7 @@ public class DragAndDrop : MonoBehaviour
 
                 grabbed.isKinematic = true;
                 grabbed.useGravity = false;
-                grabbed.velocity = Vector3.zero;
+                grabbed.linearVelocity = Vector3.zero;
                 grabbed.angularVelocity = Vector3.zero;
                 break;
             }
