@@ -9,6 +9,7 @@ public class DragAndDrop : MonoBehaviour
     Rigidbody grabbed;
     Collider grabbedCol;
     float grabDistance;
+
     PhysicMaterial noBounce;
 
     void Start()
@@ -47,6 +48,7 @@ public class DragAndDrop : MonoBehaviour
                 grabbed = rb;
                 grabbedCol = hit.collider;
                 grabDistance = hit.distance;
+
                 grabbed.isKinematic = true;
                 grabbed.useGravity = false;
                 grabbed.velocity = Vector3.zero;
@@ -60,6 +62,7 @@ public class DragAndDrop : MonoBehaviour
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         Vector3 pos = ray.GetPoint(grabDistance);
+
         pos.y = Mathf.Max(pos.y, liftHeight);
         grabbed.transform.position = pos;
 
@@ -81,6 +84,5 @@ public class DragAndDrop : MonoBehaviour
         }
         grabbed = null;
         grabbedCol = null;
-        grabDistance = 0f;
     }
 }
