@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class DragAndDrop : MonoBehaviour
 {
-    public float liftHeight = 1f;
+    public float liftHeight = 0.5f;
     public float rotateSpeed = 10f;
 
     Camera cam;
