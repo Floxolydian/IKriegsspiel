@@ -8,6 +8,9 @@ public class CameraController : MonoBehaviour
     public float rotateSpeed = 100f;
     public DragAndDrop dragAndDrop;
 
+    public Unit selectedUnit;
+    Unit copyBuffer;
+
     Camera cam;
 
     void Start()
@@ -22,6 +25,8 @@ public class CameraController : MonoBehaviour
         HandleMove();
         HandleZoom();
         HandleRotate();
+        HandleSelection();
+        HandleCopyPaste();
     }
 
     void HandleMove()
@@ -68,5 +73,54 @@ public class CameraController : MonoBehaviour
 
         transform.Rotate(Vector3.up, yaw, Space.World);
         transform.Rotate(Vector3.right, pitch, Space.Self);
+    }
+
+    void HandleSelection()
+    {
+        if (Mouse.current == null) return;
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            foreach (var hit in hits)
+            {
+                var unit = hit.collider.GetComponentInParent<Unit>();
+                if (unit != null)
+                {
+                    SelectUnit(unit);
+                    break;
+                }
+            }
+        }
+    }
+
+    void HandleCopyPaste()
+    {
+        if (Keyboard.current == null) return;
+
+        if (selectedUnit != null && Keyboard.current.ctrlKey.isPressed && Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            copyBuffer = selectedUnit;
+        }
+
+        if (copyBuffer != null && Keyboard.current.ctrlKey.isPressed && Keyboard.current.vKey.wasPressedThisFrame)
+        {
+            if (Mouse.current == null) return;
+            Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                GameObject obj = Instantiate(copyBuffer.gameObject, hit.point, copyBuffer.transform.rotation);
+                SelectUnit(obj.GetComponent<Unit>());
+            }
+        }
+    }
+
+    void SelectUnit(Unit unit)
+    {
+        if (selectedUnit == unit) return;
+        if (selectedUnit != null) selectedUnit.SetSelected(false);
+        selectedUnit = unit;
+        if (selectedUnit != null) selectedUnit.SetSelected(true);
     }
 }
