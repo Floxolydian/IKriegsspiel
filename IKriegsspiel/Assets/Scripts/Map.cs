@@ -91,7 +91,7 @@ public class Map : MonoBehaviour
                 int w = Mathf.Min(tileSize, tex.width - x * tileSize);
                 int h = Mathf.Min(tileSize, tex.height - y * tileSize);
 
-                var tileTex = new Texture2D(w, h, tex.format, false);
+                var tileTex = new Texture2D(w, h, TextureFormat.RGBA32, false);
                 tileTex.SetPixels(tex.GetPixels(x * tileSize, y * tileSize, w, h));
                 tileTex.Apply();
 
