@@ -20,6 +20,8 @@ public class DragAndDrop : MonoBehaviour
         noBounce.bounciness = 0f;
     }
 
+    public bool IsDragging => grabbed != null;
+
     void Update()
     {
         if (grabbed == null)
