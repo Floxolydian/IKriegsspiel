@@ -5,6 +5,7 @@ public class CameraController : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public float zoomSpeed = 10f;
+    public float rotateSpeed = 100f;
     public DragAndDrop dragAndDrop;
 
     Camera cam;
@@ -20,6 +21,7 @@ public class CameraController : MonoBehaviour
     {
         HandleMove();
         HandleZoom();
+        HandleRotate();
     }
 
     void HandleMove()
@@ -53,5 +55,18 @@ public class CameraController : MonoBehaviour
         {
             transform.position += transform.forward * scroll * zoomSpeed * Time.deltaTime;
         }
+    }
+
+    void HandleRotate()
+    {
+        if (Mouse.current == null) return;
+        if (!Mouse.current.middleButton.isPressed) return;
+
+        Vector2 delta = Mouse.current.delta.ReadValue();
+        float yaw = delta.x * rotateSpeed * Time.deltaTime;
+        float pitch = -delta.y * rotateSpeed * Time.deltaTime;
+
+        transform.Rotate(Vector3.up, yaw, Space.World);
+        transform.Rotate(Vector3.right, pitch, Space.Self);
     }
 }
