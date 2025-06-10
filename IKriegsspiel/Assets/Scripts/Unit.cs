@@ -24,6 +24,10 @@ public class Unit : MonoBehaviour
         }
         if (texture != null)
             ApplyTexture(texture);
+
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null)
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
     void ApplyTexture(Texture2D tex)

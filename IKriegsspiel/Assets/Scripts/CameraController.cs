@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         if (dragAndDrop == null)
-            dragAndDrop = FindObjectOfType<DragAndDrop>();
+            dragAndDrop = FindFirstObjectByType<DragAndDrop>();
     }
 
     void Update()
