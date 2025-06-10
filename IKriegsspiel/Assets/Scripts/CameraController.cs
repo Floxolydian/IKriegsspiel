@@ -119,8 +119,6 @@ public class CameraController : MonoBehaviour
     void SelectUnit(Unit unit)
     {
         if (selectedUnit == unit) return;
-        if (selectedUnit != null) selectedUnit.SetSelected(false);
         selectedUnit = unit;
-        if (selectedUnit != null) selectedUnit.SetSelected(true);
     }
 }

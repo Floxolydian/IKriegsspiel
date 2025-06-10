@@ -5,7 +5,7 @@ public class Unit : MonoBehaviour
 {
     public Texture2D texture;
     public float decalHeightOffset = 0.01f;
-    GameObject selectionIndicator;
+
 
     void Awake()
     {
@@ -30,8 +30,7 @@ public class Unit : MonoBehaviour
         if (rb != null)
             rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
-        CreateSelectionIndicator();
-        SetSelected(false);
+
     }
 
     void ApplyTexture(Texture2D tex)
@@ -72,35 +71,5 @@ public class Unit : MonoBehaviour
         rend.material = mat;
     }
 
-    void CreateSelectionIndicator()
-    {
-        var collider = GetComponent<Collider>();
-        if (collider == null) return;
 
-        var bounds = collider.bounds;
-        GameObject ring = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
-        Destroy(ring.GetComponent<Collider>());
-        ring.name = "SelectionIndicator";
-        ring.transform.SetParent(transform, false);
-
-        float radiusX = bounds.size.x * 1.1f;
-        float radiusZ = bounds.size.z * 1.1f;
-        ring.transform.localScale = new Vector3(radiusX / transform.lossyScale.x, 0.05f, radiusZ / transform.lossyScale.z);
-        ring.transform.localPosition = Vector3.zero;
-        var rend = ring.GetComponent<MeshRenderer>();
-        var outlineShader = Shader.Find("Universal Render Pipeline/Unlit");
-        if (outlineShader == null)
-            outlineShader = Shader.Find("Unlit/Color");
-        var outlineMat = new Material(outlineShader);
-        outlineMat.color = Color.yellow;
-        rend.material = outlineMat;
-        ring.SetActive(false);
-        selectionIndicator = ring;
-    }
-
-    public void SetSelected(bool selected)
-    {
-        if (selectionIndicator != null)
-            selectionIndicator.SetActive(selected);
-    }
 }

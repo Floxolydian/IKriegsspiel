@@ -71,7 +71,14 @@ public class DragAndDrop : MonoBehaviour
 
         float scroll = Mouse.current.scroll.ReadValue().y;
         if (Mathf.Abs(scroll) > Mathf.Epsilon)
-            grabbed.transform.Rotate(Vector3.up, scroll * rotateSpeed, Space.World);
+        {
+            float angle = scroll * rotateSpeed;
+            if (Keyboard.current != null && Keyboard.current.shiftKey.isPressed)
+            {
+                angle = Mathf.Sign(angle) * 1f;
+            }
+            grabbed.transform.Rotate(Vector3.up, angle, Space.World);
+        }
     }
 
     void EndDrag()
