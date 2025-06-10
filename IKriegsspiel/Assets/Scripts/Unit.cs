@@ -38,10 +38,22 @@ public class Unit : MonoBehaviour
             top = quad.transform;
         }
         var collider = GetComponent<Collider>();
-        var size = collider.bounds.size;
-        top.localPosition = new Vector3(0f, size.y / 2f + decalHeightOffset, 0f);
-        top.localRotation = Quaternion.Euler(90f, 0f, 0f);
-        top.localScale = new Vector3(size.x, size.z, 1f);
+        var bounds = collider.bounds;
+
+        // place the decal at the very top of the collider regardless of pivot
+        Vector3 worldTopCenter = new Vector3(bounds.center.x,
+                                             bounds.max.y + decalHeightOffset,
+                                             bounds.center.z);
+        top.position = worldTopCenter;
+
+        // keep the orientation relative to the parent object
+        top.rotation = transform.rotation * Quaternion.Euler(90f, 0f, 0f);
+
+        // adjust scale so the decal matches the collider dimensions in world space
+        Vector3 parentScale = transform.lossyScale;
+        top.localScale = new Vector3(bounds.size.x / parentScale.x,
+                                     bounds.size.z / parentScale.z,
+                                     1f);
 
         var rend = top.GetComponent<MeshRenderer>();
         var shader = Shader.Find("Universal Render Pipeline/Unlit");
