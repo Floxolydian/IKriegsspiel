@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(TextureContextMenu))]
 public class Map : MonoBehaviour
 {
     public Texture2D texture;
@@ -46,7 +47,7 @@ public class Map : MonoBehaviour
         }
     }
 
-    void ApplyTexture(Texture2D tex)
+    public void ApplyTexture(Texture2D tex)
     {
         if (tex.width <= tileSize && tex.height <= tileSize)
         {

@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(TextureContextMenu))]
 public class Unit : MonoBehaviour
 {
     public Texture2D texture;
@@ -33,7 +34,7 @@ public class Unit : MonoBehaviour
 
     }
 
-    void ApplyTexture(Texture2D tex)
+    public void ApplyTexture(Texture2D tex)
     {
         Transform top = transform.Find("Top");
         if (top == null)
