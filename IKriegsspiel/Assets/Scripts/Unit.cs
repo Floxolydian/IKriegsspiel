@@ -33,6 +33,16 @@ public class Unit : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Replace the current unit texture at runtime.
+    /// </summary>
+    /// <param name="tex">Texture to apply on the top side.</param>
+    public void SetTexture(Texture2D tex)
+    {
+        texture = tex;
+        ApplyTexture(tex);
+    }
+
     void ApplyTexture(Texture2D tex)
     {
         Transform top = transform.Find("Top");
