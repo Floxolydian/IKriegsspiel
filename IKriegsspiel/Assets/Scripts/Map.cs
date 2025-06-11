@@ -46,6 +46,16 @@ public class Map : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Replace the current map texture at runtime.
+    /// </summary>
+    /// <param name="tex">Texture to display on the map.</param>
+    public void SetTexture(Texture2D tex)
+    {
+        texture = tex;
+        ApplyTexture(tex);
+    }
+
     void ApplyTexture(Texture2D tex)
     {
         if (tex.width <= tileSize && tex.height <= tileSize)
