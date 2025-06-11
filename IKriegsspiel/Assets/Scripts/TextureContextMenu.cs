@@ -1,36 +1,63 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.IO;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+using System.Windows.Forms;
+#endif
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class TextureContextMenu : MonoBehaviour
 {
-#if UNITY_EDITOR
-    void OnMouseOver()
+    bool showMenu;
+    Vector2 menuPos;
+
+    void Update()
     {
         if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
-            ShowMenu();
+            showMenu = true;
+            menuPos = Mouse.current.position.ReadValue();
+        }
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            showMenu = false;
         }
     }
 
-    void ShowMenu()
+    void OnGUI()
     {
-        var menu = new GenericMenu();
-        menu.AddItem(new GUIContent("Select texture"), false, OnSelectTexture);
-        Vector2 pos = Mouse.current.position.ReadValue();
-        pos.y = Screen.height - pos.y;
-        menu.DropDown(new Rect(pos, Vector2.zero));
-    }
-
-    void OnSelectTexture()
-    {
-        string path = EditorUtility.OpenFilePanel("Select texture", "", "png,jpg,jpeg");
-        if (string.IsNullOrEmpty(path))
+        if (!showMenu)
             return;
 
-        byte[] data = System.IO.File.ReadAllBytes(path);
+        Rect rect = new Rect(menuPos.x, Screen.height - menuPos.y, 150, 25);
+        if (GUI.Button(rect, "Select texture"))
+        {
+            showMenu = false;
+            string path = OpenFileDialog();
+            if (!string.IsNullOrEmpty(path))
+                LoadTexture(path);
+        }
+    }
+
+    string OpenFileDialog()
+    {
+#if UNITY_STANDALONE_WIN && !UNITY_EDITOR
+        var ofd = new OpenFileDialog();
+        ofd.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+        ofd.Multiselect = false;
+        return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
+#elif UNITY_EDITOR
+        return EditorUtility.OpenFilePanel("Select texture", "", "png,jpg,jpeg");
+#else
+        return null;
+#endif
+    }
+
+    void LoadTexture(string path)
+    {
+        byte[] data = File.ReadAllBytes(path);
         var tex = new Texture2D(2, 2);
         tex.LoadImage(data);
 
@@ -48,5 +75,4 @@ public class TextureContextMenu : MonoBehaviour
             map.ApplyTexture(tex);
         }
     }
-#endif
 }
