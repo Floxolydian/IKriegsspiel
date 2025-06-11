@@ -409,6 +409,8 @@ GameObject:
   - component: {fileID: 679798068}
   - component: {fileID: 679798067}
   - component: {fileID: 679798066}
+  - component: {fileID: 679798072}
+  - component: {fileID: 679798073}
   m_Layer: 0
   m_Name: unit (1)
   m_TagString: Untagged
@@ -546,6 +548,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &679798072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679798065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86af3b129dfa4098884ce6c0bd5ac32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &679798073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679798065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1f1f0baddf48478d1b9e4c25cc3c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,6 +635,8 @@ GameObject:
   - component: {fileID: 1570000002}
   - component: {fileID: 1570000001}
   - component: {fileID: 1570000005}
+  - component: {fileID: 1570000006}
+  - component: {fileID: 1570000007}
   m_Layer: 0
   m_Name: map
   m_TagString: Untagged
@@ -720,6 +749,31 @@ MonoBehaviour:
   dynamicFriction: 1
   staticFriction: 1
   tileSize: 4096
+--- !u!114 &1570000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86af3b129dfa4098884ce6c0bd5ac32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1570000007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1f1f0baddf48478d1b9e4c25cc3c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1 &1570000100
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +834,8 @@ GameObject:
   - component: {fileID: 2081671767}
   - component: {fileID: 2081671772}
   - component: {fileID: 2081671771}
+  - component: {fileID: 2081671773}
+  - component: {fileID: 2081671774}
   m_Layer: 0
   m_Name: unit
   m_TagString: Untagged
@@ -917,6 +973,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texture: {fileID: 2800000, guid: 1fb23b9acf9c4ed44b42779267139763, type: 3}
   decalHeightOffset: 0.01
+--- !u!114 &2081671773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081671766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86af3b129dfa4098884ce6c0bd5ac32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2081671774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081671766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1f1f0baddf48478d1b9e4c25cc3c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
