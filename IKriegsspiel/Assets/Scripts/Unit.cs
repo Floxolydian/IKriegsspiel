@@ -45,12 +45,28 @@ public class Unit : MonoBehaviour
             top = quad.transform;
         }
         var collider = GetComponent<Collider>();
-        var bounds = collider.bounds;
 
-        // place the decal at the very top of the collider regardless of pivot
-        Vector3 worldTopCenter = new Vector3(bounds.center.x,
-                                             bounds.max.y + decalHeightOffset,
-                                             bounds.center.z);
+        Vector3 worldTopCenter;
+        Vector3 worldSize;
+        if (collider is BoxCollider box)
+        {
+            // BoxCollider provides reliable local size information that isn't
+            // affected by the object's rotation. Use it to compute the world
+            // dimensions and top position so copied/rotated units size correctly.
+            worldSize = Vector3.Scale(box.size, transform.lossyScale);
+            Vector3 worldCenter = transform.TransformPoint(box.center);
+            worldTopCenter = worldCenter + transform.up * (worldSize.y / 2f + decalHeightOffset);
+        }
+        else
+        {
+            // Fallback for other collider types.
+            var bounds = collider.bounds;
+            worldTopCenter = new Vector3(bounds.center.x,
+                                         bounds.max.y + decalHeightOffset,
+                                         bounds.center.z);
+            worldSize = bounds.size;
+        }
+
         top.position = worldTopCenter;
 
         // keep the orientation relative to the parent object
@@ -58,8 +74,8 @@ public class Unit : MonoBehaviour
 
         // adjust scale so the decal matches the collider dimensions in world space
         Vector3 parentScale = transform.lossyScale;
-        top.localScale = new Vector3(bounds.size.x / parentScale.x,
-                                     bounds.size.z / parentScale.z,
+        top.localScale = new Vector3(worldSize.x / parentScale.x,
+                                     worldSize.z / parentScale.z,
                                      1f);
 
         var rend = top.GetComponent<MeshRenderer>();
