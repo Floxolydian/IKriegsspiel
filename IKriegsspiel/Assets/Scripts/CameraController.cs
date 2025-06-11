@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
         HandleRotate();
         HandleSelection();
         HandleCopyPaste();
+        HandleDelete();
     }
 
     void HandleMove()
@@ -113,6 +114,17 @@ public class CameraController : MonoBehaviour
                 GameObject obj = Instantiate(copyBuffer.gameObject, hit.point, copyBuffer.transform.rotation);
                 SelectUnit(obj.GetComponent<Unit>());
             }
+        }
+    }
+
+    void HandleDelete()
+    {
+        if (Keyboard.current == null) return;
+        if (selectedUnit == null) return;
+        if (Keyboard.current.deleteKey.wasPressedThisFrame)
+        {
+            Destroy(selectedUnit.gameObject);
+            selectedUnit = null;
         }
     }
 
